@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Travel Odyssey - Home</title>
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/babel-standalone@6.26.0/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const Navbar = () => {
+      return (
+        <nav className="bg-gray-800 text-white p-4 sticky top-0 z-10">
+          <div className="container mx-auto flex justify-between items-center">
+            <a href="index.html" className="text-2xl font-bold">My Travel Odyssey</a>
+            <ul className="flex space-x-4">
+              <li><a href="index.html" className="hover:text-gray-300">Home</a></li>
+              <li><a href="stories.html" className="hover:text-gray-300">Stories</a></li>
+              <li><a href="photos.html" className="hover:text-gray-300">Photos</a></li>
+              <li><a href="dark-tourism.html" className="hover:text-gray-300">Dark Tourism</a></li>
+              <li><a href="about.html" className="hover:text-gray-300">About</a></li>
+            </ul>
+          </div>
+        </nav>
+      );
+    };
+
+    const Hero = () => {
+      return (
+        <section id="home" className="relative">
+          <img
+            src="https://source.unsplash.com/random/1600x600/?travel"
+            alt="Travel Hero"
+            className="w-full h-[600px] object-cover"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="text-center text-white">
+              <h1 className="text-5xl font-bold mb-4">Explore the World with Me</h1>
+              <p className="text-xl mb-6">Stories, Photos, and Dark Tourism Adventures</p>
+              <a
+                href="stories.html"
+                className="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700"
+              >
+                Start Your Journey
+              </a>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const BlogPost = ({ title, excerpt, image, link, category }) => {
+      return (
+        <div className="bg-white shadow-md rounded-lg overflow-hidden">
+          <img src={image} alt={title} className="w-full h-48 object-cover" />
+          <div className="p-4">
+            <span className="text-sm text-gray-500">{category}</span>
+            <h3 className="text-xl font-semibold mb-2">{title}</h3>
+            <p className="text-gray-600 mb-4">{excerpt}</p>
+            <a href={link} className="text-blue-600 hover:underline">Read More</a>
+          </div>
+        </div>
+      );
+    };
+
+    const FeaturedSection = () => {
+      const posts = [
+        {
+          title: "Chasing Sunsets in Santorini",
+          excerpt: "A journey through the whitewashed cliffs and vibrant sunsets of Greece's iconic island.",
+          image: "https://source.unsplash.com/random/600x400/?santorini",
+          link: "stories.html",
+          category: "Travel Stories",
+        },
+        {
+          title: "The Ghosts of Auschwitz",
+          excerpt: "A haunting visit to one of the world's most somber historical sites.",
+          image: "https://source.unsplash.com/random/600x400/?history",
+          link: "dark-tourism.html",
+          category: "Dark Tourism",
+        },
+      ];
+
+      return (
+        <section className="py-16 bg-gray-100">
+          <div className="container mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-8">Featured Adventures</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {posts.map((post, index) => (
+                <BlogPost key={index} {...post} />
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const PhotosPreview = () => {
+      const photos = [
+        "https://source.unsplash.com/random/600x400/?landscape",
+        "https://source.unsplash.com/random/600x400/?city",
+        "https://source.unsplash.com/random/600x400/?culture",
+      ];
+
+      return (
+        <section className="py-16">
+          <div className="container mx-auto">
+            <h2 className="text-3xl font-bold text-center mb-8">Photo Gallery Preview</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {photos.map((photo, index) => (
+                <img
+                  key={index}
+                  src={photo}
+                  alt={`Travel Photo ${index + 1}`}
+                  className="w-full h-64 object-cover rounded-lg shadow-md"
+                />
+              ))}
+            </div>
+            <div className="text-center mt-8">
+              <a href="photos.html" className="text-blue-600 hover:underline">View All Photos</a>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    const Footer = () => {
+      return (
+        <footer className="bg-gray-800 text-white py-8">
+          <div className="container mx-auto text-center">
+            <p>© 2025 My Travel Odyssey. All rights reserved.</p>
+            <div className="mt-4">
+              <a href="#" className="mx-2 hover:text-gray-300">Instagram</a>
+              <a href="#" className="mx-2 hover:text-gray-300">Facebook</a>
+              <a href="#" className="mx-2 hover:text-gray-300">Twitter</a>
+            </div>
+          </div>
+        </footer>
+      );
+    };
+
+    const App = () => {
+      return (
+        <div>
+          <Navbar />
+          <Hero />
+          <FeaturedSection />
+          <PhotosPreview />
+          <Footer />
+        </div>
+      );
+    };
+
+    ReactDOM.render(<App />, document.getElementById('root'));
+  </script>
+</body>
+</html>
