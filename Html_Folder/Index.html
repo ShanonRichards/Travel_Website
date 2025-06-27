@@ -3,417 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Wanderlust: Travel & Photography</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <title>My Travel Blog</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Crimson+Text&display=swap');
-        body {
-            font-family: 'Crimson Text', serif;
-            background-color: #1a1a1a;
-            color: #d1d5db;
+        /* Custom styles for flick-across albums and dark tourism theme */
+        .album-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
         }
-        h1, h2, h3 {
-            font-family: 'Cinzel', serif;
+        .album-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        .album-container::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 4px;
         }
         .album-card {
-            transition: transform 0.3s, filter 0.3s;
+            flex: 0 0 auto;
+            scroll-snap-align: start;
         }
-        .album-card:hover {
-            transform: scale(1.05);
-            filter: brightness(1.2);
+        .gallery-image:hover .description {
+            opacity: 1;
+        }
+        .description {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        /* Dark tourism and travel theme styles */
+        body {
+            background: linear-gradient(to bottom, #1f2937, #374151);
+        }
+        .section-bg {
+            background: rgba(31, 41, 55, 0.9);
+            border: 1px solid #4b5563;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+        .dark-tourism-bg {
+            background: linear-gradient(to bottom, #111827, #1f2937);
+        }
+        .text-travel-accent {
+            color: #f59e0b; /* Amber for travel vibrancy */
+        }
+        .text-dark-accent {
+            color: #dc2626; /* Red for dark tourism intensity */
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
-    <!-- Navigation -->
-    <nav class="bg-gray-900 shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <h1 class="text-2xl font-bold text-red-800">Dark Wanderlust</h1>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="index.html" class="text-gray-300 hover:text-red-800 px-3 py-2">Home</a>
-                    <a href="about.html" class="text-gray-300 hover:text-red-800 px-3 py-2">About</a>
-                    <a href="contact.html" class="text-gray-300 hover:text-red-800 px-3 py-2">Contact</a>
-                    <a href="admin.html" class="text-gray-300 hover:text-red-800 px-3 py-2">Admin</a>
-                </div>
-            </div>
+<body class="font-sans text-gray-100">
+    <!-- Banner with Taskbar -->
+    <header class="bg-cover bg-center h-96 flex items-center justify-center relative" style="background-image: url('https://source.unsplash.com/random/1600x900/?dark-tourism')">
+        <div class="absolute inset-0 bg-black opacity-60"></div>
+        <div class="relative text-center text-white">
+            <img src="https://via.placeholder.com/150?text=Logo" alt="Travel Blog Logo" class="h-24 mx-auto mb-4 border-2 border-gray-400 rounded-full">
+            <h1 class="text-4xl font-bold text-travel-accent">Wanderlust & Shadows</h1>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="relative">
-        <img id="featured-image" src="https://drive.google.com/uc?export=view&id=1FictitiousImageID" alt="Featured Destination" class="w-full h-96 object-cover filter grayscale">
-        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div class="text-center">
-                <h1 class="text-4xl md:text-5xl font-bold text-white">Explore the Shadows</h1>
-                <p id="featured-text" class="mt-4 text-lg text-gray-300">Journey through the world’s darkest corners and capture their stories.</p>
-            </div>
-        </div>
+        <nav class="absolute top-0 w-full bg-gray-900 bg-opacity-80">
+            <ul class="flex justify-center space-x-6 py-4 text-gray-200">
+                <li><a href="#home" class="hover:text-travel-accent">Home</a></li>
+                <li><a href="#countries" class="hover:text-travel-accent">Countries</a></li>
+                <li><a href="#blogs" class="hover:text-travel-accent">Blogs</a></li>
+                <li><a href="#dark-tourism" class="hover:text-dark-accent">Dark Tourism</a></li>
+                <li><a href="#map" class="hover:text-travel-accent">Map</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <!-- Albums Section -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-3xl font-bold text-red-800">Travel Albums</h2>
-            <button id="back-button" class="bg-red-800 text-white px-4 py-2 rounded hover:bg-red-900 hidden">Back</button>
+    <!-- Flick-Across Country Albums -->
+    <section id="countries" class="py-12 section-bg rounded-lg mx-4">
+        <h2 class="text-3xl font-bold text-center mb-8 text-travel-accent">Countries I've Visited</h2>
+        <div class="album-container mx-auto max-w-6xl px-4">
+            <div class="album-card w-64 mx-2">
+                <a href="#japan" onclick="showCountry('Japan')">
+                    <img src="https://source.unsplash.com/random/300x200/?japan" alt="Japan" class="w-full h-48 object-cover rounded-lg border border-gray-600">
+                    <h3 class="text-xl font-semibold text-center mt-2 text-gray-200">Japan</h3>
+                </a>
+            </div>
+            <div class="album-card w-64 mx-2">
+                <a href="#italy" onclick="showCountry('Italy')">
+                    <img src="https://source.unsplash.com/random/300x200/?italy" alt="Italy" class="w-full h-48 object-cover rounded-lg border border-gray-600">
+                    <h3 class="text-xl font-semibold text-center mt-2 text-gray-200">Italy</h3>
+                </a>
+            </div>
+            <!-- Add more countries as needed -->
         </div>
-        <div id="album-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-    </main>
+        <!-- Country Details (Hidden by default) -->
+        <div id="country-details" class="hidden max-w-6xl mx-auto mt-8">
+            <h3 id="country-name" class="text-2xl font-bold text-center text-travel-accent"></h3>
+            <div class="album-container mt-4">
+                <div class="album-card w-64 mx-2">
+                    <a href="#tokyo" onclick="showCity('Tokyo')">
+                        <img src="https://source.unsplash.com/random/300x200/?tokyo" alt="Tokyo" class="w-full h-48 object-cover rounded-lg border border-gray-600">
+                        <h4 class="text-lg font-semibold text-center mt-2 text-gray-200">Tokyo</h4>
+                    </a>
+                </div>
+                <!-- Add more cities as needed -->
+            </div>
+            <!-- City Details (Hidden by default) -->
+            <div id="city-details" class="hidden mt-4">
+                <h4 id="city-name" class="text-xl font-bold text-center text-travel-accent"></h4>
+                <div class="album-container">
+                    <div class="album-card w-64 mx-2">
+                        <a href="#shibuya" onclick="showSite('Shibuya')">
+                            <img src="https://source.unsplash.com/random/300x200/?shibuya" alt="Shibuya" class="w-full h-48 object-cover rounded-lg border border-gray-600">
+                            <h5 class="text-lg font-semibold text-center mt-2 text-gray-200">Shibuya</h5>
+                        </a>
+                    </div>
+                    <!-- Add more sites as needed -->
+                </div>
+                <!-- Site Gallery (Hidden by default) -->
+                <div id="site-gallery" class="hidden mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="gallery-image relative">
+                        <img src="https://source.unsplash.com/random/300x200/?shibuya-crossing" alt="Shibuya Crossing" class="w-full h-48 object-cover rounded-lg border border-gray-600">
+                        <div class="description absolute inset-0 bg-black bg-opacity-75 text-white p-4 flex items-center justify-center">
+                            <p>Shibuya Crossing at night, a vibrant chaos of lights and people.</p>
+                        </div>
+                    </div>
+                    <!-- Add more photos/videos as needed -->
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 py-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-400">
-            <p>© 2025 Dark Wanderlust. All rights reserved.</p>
+    <!-- Blogs Section -->
+    <section id="blogs" class="py-12 section-bg rounded-lg mx-4">
+        <h2 class="text-3xl font-bold text-center mb-8 text-travel-accent">My Travel Blogs</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+            <a href="/blog/japan-adventure" class="block">
+                <img src="https://source.unsplash.com/random/300x200/?travel" alt="Japan Adventure" class="w-full h-48 object-cover rounded-lg border border-gray-600">
+                <h3 class="text-xl font-semibold mt-2 text-gray-200">Japan Adventure</h3>
+                <p class="text-gray-400">Exploring the vibrant streets of Tokyo and the serene temples of Kyoto.</p>
+            </a>
+            <a href="/blog/italy-journey" class="block">
+                <img src="https://source.unsplash.com/random/300x200/?italy" alt="Italy Journey" class="w-full h-48 object-cover rounded-lg border border-gray-600">
+                <h3 class="text-xl font-semibold mt-2 text-gray-200">Italy Journey</h3>
+                <p class="text-gray-400">A culinary and cultural tour through Rome, Florence, and Venice.</p>
+            </a>
+            <!-- Add more blogs as needed -->
+        </div>
+    </section>
+
+    <!-- Dark Tourism Blogs Section -->
+    <section id="dark-tourism" class="py-12 dark-tourism-bg rounded-lg mx-4">
+        <h2 class="text-3xl font-bold text-center mb-8 text-dark-accent">Dark Tourism Blogs</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+            <a href="/blog/chernobyl" class="block">
+                <img src="https://source.unsplash.com/random/300x200/?chernobyl" alt="Chernobyl" class="w-full h-48 object-cover rounded-lg border border-red-900">
+                <h3 class="text-xl font-semibold mt-2 text-gray-200">Chernobyl Experience</h3>
+                <p class="text-gray-400">A haunting visit to the abandoned city of Pripyat and the Chernobyl exclusion zone.</p>
+            </a>
+            <a href="/blog/auschwitz" class="block">
+                <img src="https://source.unsplash.com/random/300x200/?auschwitz" alt="Auschwitz" class="w-full h-48 object-cover rounded-lg border border-red-900">
+                <h3 class="text-xl font-semibold mt-2 text-gray-200">Auschwitz Reflections</h3>
+                <p class="text-gray-400">Exploring the history and somber lessons of Auschwitz-Birkenau.</p>
+            </a>
+            <!-- Add more dark tourism blogs as needed -->
+        </div>
+    </section>
+
+    <!-- Countries Visited Map -->
+    <section id="map" class="py-12 section-bg rounded-lg mx-4">
+        <h2 class="text-3xl font-bold text-center mb-8 text-travel-accent">Countries I've Visited</h2>
+        <div class="max-w-6xl mx-auto px-4">
+            <iframe src="https://countries-visited.com/?countries=Cambodia%2CJapan%2CSouth%20Korea%2CHong%20Kong%2CGreece%2CGermany%2CItaly%2CPoland%2CNetherlands%2CSpain%2CUkraine%2CUnited%20Kingdom%2CVatican%2CNew%20Zealand%2CFiji%2CFrance%2CThailand%2CSingapore%2CAustralia" width="100%" height="500px" frameborder="0"></iframe>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-200 py-8">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p>© 2025 Wanderlust & Shadows. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        // Sample data structure for nested albums
-        const albums = [
-            {
-                name: "Thailand",
-                image: "https://drive.google.com/uc?export=view&id=1ThailandID",
-                cities: [
-                    {
-                        name: "Bangkok",
-                        activities: [
-                            {
-                                name: "Death Railway",
-                                photos: [
-                                    { url: "https://drive.google.com/uc?export=view&id=1ThailandDeathRailway1", caption: "Bridge over the River Kwai." },
-                                    { url: "https://drive.google.com/uc?export=view&id=1ThailandDeathRailway2", caption: "Memorial to POWs." }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                name: "Japan",
-                image: "https://drive.google.com/uc?export=view&id=1JapanID",
-                cities: [
-                    {
-                        name: "Hiroshima",
-                        activities: [
-                            {
-                                name: "Peace Memorial",
-                                photos: [
-                                    { url: "https://drive.google.com/uc?export=view&id=1Hiroshima1", caption: "Silent scars of history." },
-                                    { url: "https://drive.google.com/uc?export=view&id=1Hiroshima2", caption: "Atomic Bomb Dome at dusk." }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                name: "Cambodia",
-                image: "https://drive.google.com/uc?export=view&id=1CambodiaID",
-                cities: [
-                    {
-                        name: "Phnom Penh",
-                        activities: [
-                            {
-                                name: "Killing Fields",
-                                photos: [
-                                    { url: "https://drive.google.com/uc?export=view&id=1KillingFields1", caption: "Choeung Ek memorial stupa." }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                name: "Singapore",
-                image: "https://drive.google.com/uc?export=view&id=1SingaporeID",
-                cities: [
-                    {
-                        name: "Singapore City",
-                        activities: [
-                            {
-                                name: "Changi Prison Museum",
-                                photos: [
-                                    { url: "https://drive.google.com/uc?export=view&id=1Changi1", caption: "WWII prisoner cells." }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                name: "New Zealand",
-                image: "https://drive.google.com/uc?export=view&id=1NewZealandID",
-                cities: [
-                    {
-                        name: "Christchurch",
-                        activities: [
-                            {
-                                name: "Earthquake Memorial",
-                                photos: [
-                                    { url: "https://drive.google.com/uc?export=view&id=1Christchurch1", caption: "Tribute to 2011 victims." }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                name: "Germany",
-                image: "https://drive.google.com/uc?export=view&id=1GermanyID",
-                cities: [
-                    {
-                        name: "Berlin",
-                        activities: [
-                            {
-                                name: "Berlin Wall",
-                                photos: [
-                                    { url: "https://drive.google.com/uc?export=view&id=1BerlinWall1", caption: "Remnants of division." }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                name: "Ukraine",
-                image: "https://drive.google.com/uc?export=view&id=1UkraineID",
-                cities: [
-                    {
-                        name: "Kyiv",
-                        activities: [
-                            {
-                                name: "Chernobyl Tour",
-                                photos: [
-                                    { url: "https://drive.google.com/uc?export=view&id=1Chernobyl1", caption: "Abandoned hospital in Pripyat." },
-                                    { url: "https://drive.google.com/uc?export=view&id=1Chernobyl2", caption: "The haunting Ferris wheel." }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                name: "France",
-                image: "https://drive.google.com/uc?export=view&id=1FranceID",
-                cities: [
-                    {
-                        name: "Paris",
-                        activities: [
-                            {
-                                name: "Catacombs",
-                                photos: [
-                                    { url: "https://drive.google.com/uc?export=view&id=1Catacombs1", caption: "Underground ossuary." }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                name: "Spain",
-                image: "https://drive.google.com/uc?export=view&id=1SpainID",
-                cities: [
-                    {
-                        name: "Barcelona",
-                        activities: [
-                            {
-                                name: "Civil War Sites",
-                                photos: [
-                                    { url: "https://drive.google.com/uc?export=view&id=1CivilWar1", caption: "Bunkers of the past." }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                name: "Netherlands",
-                image: "https://drive.google.com/uc?export=view&id=1NetherlandsID",
-                cities: [
-                    {
-                        name: "Amsterdam",
-                        activities: [
-                            {
-                                name: "Anne Frank House",
-                                photos: [
-                                    { url: "https://drive.google.com/uc?export=view&id=1AnneFrank1", caption: "Hidden annex." }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                name: "United Kingdom",
-                image: "https://drive.google.com/uc?export=view&id=1UKID",
-                cities: [
-                    {
-                        name: "London",
-                        activities: [
-                            {
-                                name: "Tower of London",
-                                photos: [
-                                    { url: "https://drive.google.com/uc?export=view&id=1Tower1", caption: "Centuries of dark history." }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                name: "Greece",
-                image: "https://drive.google.com/uc?export=view&id=1GreeceID",
-                cities: [
-                    {
-                        name: "Athens",
-                        activities: [
-                            {
-                                name: "Plague Sites",
-                                photos: [
-                                    { url: "https://drive.google.com/uc?export=view&id=1Plague1", caption: "Ancient burial grounds." }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                name: "Poland",
-                image: "https://drive.google.com/uc?export=view&id=1PolandID",
-                cities: [
-                    {
-                        name: "Krakow",
-                        activities: [
-                            {
-                                name: "Auschwitz-Birkenau",
-                                photos: [
-                                    { url: "https://drive.google.com/uc?export=view&id=1Auschwitz1", caption: "Holocaust memorial." }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                name: "Italy",
-                image: "https://drive.google.com/uc?export=view&id=1ItalyID",
-                cities: [
-                    {
-                        name: "Pompeii",
-                        activities: [
-                            {
-                                name: "Ruins of Pompeii",
-                                photos: [
-                                    { url: "https://drive.google.com/uc?export=view&id=1Pompeii1", caption: "Frozen in time by Vesuvius." }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            }
-        ];
-
-        // Navigation state
-        let currentLevel = 'countries';
-        let currentCountry = null;
-        let currentCity = null;
-
-        // Render albums
-        function renderAlbums() {
-            const container = document.getElementById('album-container');
-            const backButton = document.getElementById('back-button');
-            container.innerHTML = '';
-
-            // Show/hide back button
-            backButton.classList.toggle('hidden', currentLevel === 'countries');
-
-            if (currentLevel === 'countries') {
-                albums.forEach(country => {
-                    const card = createAlbumCard(country.name, country.image, () => {
-                        currentLevel = 'cities';
-                        currentCountry = country;
-                        renderAlbums();
-                    });
-                    container.appendChild(card);
-                });
-            } else if (currentLevel === 'cities' && currentCountry) {
-                currentCountry.cities.forEach(city => {
-                    const card = createAlbumCard(city.name, currentCountry.image, () => {
-                        currentLevel = 'activities';
-                        currentCity = city;
-                        renderAlbums();
-                    });
-                    container.appendChild(card);
-                });
-            } else if (currentLevel === 'activities' && currentCity) {
-                currentCity.activities.forEach(activity => {
-                    const card = createAlbumCard(activity.name, currentCountry.image, () => {
-                        currentLevel = 'gallery';
-                        renderGallery(activity.photos);
-                    });
-                    container.appendChild(card);
-                });
-            }
+        function showCountry(country) {
+            document.getElementById('country-details').classList.remove('hidden');
+            document.getElementById('country-name').textContent = country;
+            document.getElementById('city-details').classList.add('hidden');
+            document.getElementById('site-gallery').classList.add('hidden');
         }
 
-        // Create album card
-        function createAlbumCard(name, image, onClick) {
-            const div = document.createElement('div');
-            div.className = 'album-card bg-gray-800 rounded-lg overflow-hidden shadow-lg cursor-pointer';
-            div.innerHTML = `
-                <img src="${image}" alt="${name}" class="w-full h-48 object-cover filter grayscale">
-                <div class="p-4">
-                    <h3 class="text-xl font-semibold text-red-800">${name}</h3>
-                </div>
-            `;
-            div.addEventListener('click', onClick);
-            return div;
+        function showCity(city) {
+            document.getElementById('city-details').classList.remove('hidden');
+            document.getElementById('city-name').textContent = city;
+            document.getElementById('site-gallery').classList.add('hidden');
         }
 
-        // Render gallery
-        function renderGallery(photos) {
-            const container = document.getElementById('album-container');
-            container.innerHTML = '';
-            photos.forEach(photo => {
-                const div = document.createElement('div');
-                div.className = 'bg-gray-800 rounded-lg p-4';
-                div.innerHTML = `
-                    <img src="${photo.url}" alt="Gallery Image" class="w-full h-auto rounded-lg mb-4 filter grayscale">
-                    ${photo.caption ? `<p class="text-gray-300">${photo.caption}</p>` : ''}
-                `;
-                container.appendChild(div);
-            });
+        function showSite(site) {
+            document.getElementById('site-gallery').classList.remove('hidden');
         }
-
-        // Back button handler
-        function goBack() {
-            if (currentLevel === 'gallery') {
-                currentLevel = 'activities';
-            } else if (currentLevel === 'activities') {
-                currentLevel = 'cities';
-            } else if (currentLevel === 'cities') {
-                currentLevel = 'countries';
-                currentCountry = null;
-                currentCity = null;
-            }
-            renderAlbums();
-        }
-
-        // Load featured content from localStorage
-        function loadFeaturedContent() {
-            const featuredImage = localStorage.getItem('featuredImage') || 'https://drive.google.com/uc?export=view&id=1FictitiousImageID';
-            const featuredText = localStorage.getItem('featuredText') || 'Journey through the world’s darkest corners and capture their stories.';
-            document.getElementById('featured-image').src = featuredImage;
-            document.getElementById('featured-text').textContent = featuredText;
-        }
-
-        // Initialize
-        document.getElementById('back-button').addEventListener('click', goBack);
-        renderAlbums();
-        loadFeaturedContent();
     </script>
 </body>
 </html>
