@@ -3,97 +3,566 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dark Tourist</title>
+  <meta name="description" content="Explore the world's most enigmatic destinations with Dark Tourist. Uncover stories of dark tourism, strange foods, festivals, and unique attractions.">
+  <title>Dark Tourist - Uncover the Unseen</title>
   <style>
-    body { margin:0; font-family: Arial, sans-serif; background:#f5f5f5; color:#222; }
-    header { background:#000; color:#fff; padding:20px; text-align:center; }
-    nav { display:flex; justify-content:center; gap:20px; margin-top:10px; }
-    nav a { color:#fff; text-decoration:none; font-weight:bold; }
-    .banner { background:#111; color:#fff; text-align:center; padding:80px 20px; }
-    .banner h1 { font-size:48px; margin:0; }
-    .section { padding:60px 20px; max-width:1100px; margin:auto; }
-    .flex { display:flex; flex-wrap:wrap; align-items:center; gap:30px; }
-    .flex img { max-width:400px; border-radius:10px; }
-    .album { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
-    .album img { width:100%; border-radius:10px; cursor:pointer; transition:0.3s; }
-    .album img:hover { transform:scale(1.05); }
-    .blog { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; }
-    .blog-post { background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 2px 5px rgba(0,0,0,0.2); }
-    .blog-post img { width:100%; height:200px; object-fit:cover; }
-    .blog-post div { padding:20px; }
-    footer { background:#333; color:#fff; padding:40px 20px; display:flex; justify-content:space-between; flex-wrap:wrap; }
-    footer input { padding:10px; margin-top:10px; width:250px; }
-    footer button { padding:10px 20px; background:#007BFF; border:none; color:#fff; border-radius:5px; margin-top:10px; cursor:pointer; }
-    footer button:hover { background:#0056b3; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background: #f9f9f9;
+      color: #2d2d2d;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    header {
+      background: rgba(20, 20, 20, 0.95);
+      color: #fff;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      transition: background 0.3s ease;
+    }
+    header.scrolled {
+      background: #141414;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    header .logo {
+      display: flex;
+      align-items: center;
+    }
+    header .logo img {
+      height: 45px;
+      margin-right: 10px;
+    }
+    header .logo span {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .search-bar input {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 25px;
+      width: 200px;
+      background: #2a2a2a;
+      color: #fff;
+      font-size: 14px;
+      transition: width 0.3s ease;
+    }
+    .search-bar input:focus {
+      width: 250px;
+      outline: none;
+    }
+    .search-bar button {
+      padding: 10px 15px;
+      background: #00a3cc;
+      border: none;
+      color: #fff;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .search-bar button:hover {
+      background: #008099;
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+    nav a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      padding: 8px 15px;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+    }
+    nav a:hover {
+      color: #fff;
+      background: #00a3cc;
+    }
+    .banner {
+      height: 100vh;
+      background: url('https://images.unsplash.com/photo-1519744792095-2f2205e87b6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.6);
+    }
+    .banner h1 {
+      font-family: 'Lora', serif;
+      font-size: 60px;
+      margin: 0;
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+    }
+    .banner p {
+      font-size: 24px;
+      margin: 20px 0;
+      max-width: 600px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+    }
+    .banner .cta {
+      padding: 12px 30px;
+      background: #00a3cc;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+    .banner .cta:hover {
+      background: #008099;
+    }
+    .section {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .about-flex {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    .about-flex:hover {
+      transform: translateY(-5px);
+    }
+    .about-flex .text {
+      flex: 1;
+      max-width: 50%;
+    }
+    .about-flex img {
+      flex: 0 0 auto;
+      max-width: 400px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .destinations {
+      padding: 40px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+    .destinations .carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      scroll-behavior: smooth;
+      padding-bottom: 20px;
+    }
+    .destinations .carousel::-webkit-scrollbar {
+      height: 8px;
+    }
+    .destinations .carousel::-webkit-scrollbar-thumb {
+      background: #00a3cc;
+      border-radius: 10px;
+    }
+    .destinations .carousel-item {
+      flex: 0 0 300px;
+      text-align: center;
+    }
+    .destinations img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      transition: transform 0.3s ease;
+    }
+    .destinations img:hover {
+      transform: scale(1.05);
+    }
+    .destinations p {
+      margin: 10px 0 0;
+      font-weight: 500;
+    }
+    .album {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .album div {
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .album div:hover {
+      transform: translateY(-5px);
+    }
+    .album img {
+      width: 100%;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .album p {
+      margin: 10px 0 0;
+      font-weight: 500;
+      color: #2d2d2d;
+    }
+    .blog {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 20px;
+    }
+    .blog-post {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    .blog-post:hover {
+      transform: translateY(-5px);
+    }
+    .blog-post img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .blog-post .content {
+      padding: 20px;
+    }
+    .blog-post .meta {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+    .blog-post .meta span {
+      margin-right: 10px;
+    }
+    .blog-post a {
+      color: #00a3cc;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .blog-post a:hover {
+      text-decoration: underline;
+    }
+    .guides {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .guide-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    .guide-card:hover {
+      transform: translateY(-5px);
+    }
+    .guide-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    footer {
+      background: #141414;
+      color: #fff;
+      padding: 60px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .social-links a {
+      color: #fff;
+      font-size: 24px;
+      transition: color 0.3s ease;
+    }
+    .social-links a:hover {
+      color: #00a3cc;
+    }
+    footer input {
+      padding: 12px;
+      margin-top: 10px;
+      width: 100%;
+      max-width: 250px;
+      border: none;
+      border-radius: 25px;
+      font-size: 14px;
+      background: #2a2a2a;
+      color: #fff;
+    }
+    footer button {
+      padding: 12px 24px;
+      background: #00a3cc;
+      border: none;
+      color: #fff;
+      border-radius: 25px;
+      margin-top: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    footer button:hover {
+      background: #008099;
+    }
+    footer .sitemap a {
+      color: #e0e0e0;
+      text-decoration: none;
+      display: block;
+      margin: 5px 0;
+      transition: color 0.3s ease;
+    }
+    footer .sitemap a:hover {
+      color: #00a3cc;
+    }
+    @media (max-width: 768px) {
+      .banner {
+        height: 70vh;
+      }
+      .banner h1 {
+        font-size: 36px;
+      }
+      .banner p {
+        font-size: 18px;
+      }
+      .about-flex {
+        flex-direction: column;
+        text-align: center;
+      }
+      .about-flex .text {
+        max-width: 100%;
+      }
+      .about-flex img {
+        max-width: 100%;
+      }
+      header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 10px 20px;
+      }
+      .search-bar input {
+        width: 150px;
+      }
+      .search-bar input:focus {
+        width: 200px;
+      }
+      nav {
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      nav a {
+        font-size: 14px;
+      }
+      .destinations .carousel {
+        flex-direction: column;
+      }
+      .destinations .carousel-item {
+        flex: 0 0 100%;
+      }
+    }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script>
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+  </script>
 </head>
 <body>
 
   <!-- Header -->
   <header>
-    <h2>Dark Tourist</h2>
+    <div class="logo">
+      <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&h=50&q=80" alt="Logo">
+      <span>Dark Tourist</span>
+    </div>
+    <div class="search-bar">
+      <input type="search" placeholder="Search destinations...">
+      <button><i class="fas fa-search"></i></button>
+    </div>
     <nav>
-      <a href="#about">About Me</a>
+      <a href="#about">About</a>
+      <a href="#destinations">Destinations</a>
       <a href="#album">Albums</a>
       <a href="#blog">Blog</a>
+      <a href="#guides">Guides</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
 
   <!-- Banner -->
   <section class="banner">
-    <h1>Explore the Dark Side of Travel</h1>
-    <p>Satisfy your curiosity for the unusual and extraordinary. Journey into the world’s most enigmatic places.</p>
+    <h1>Uncover the Unseen</h1>
+    <p>Embark on a journey through the world's most haunting and extraordinary destinations.</p>
+    <a href="#destinations" class="cta">Discover Now</a>
   </section>
 
   <!-- About -->
   <section id="about" class="section">
-    <div class="flex">
-      <div>
-        <h2>About Me</h2>
-        <p>I’ve always been drawn to the weird and the strange—whether it’s abandoned ruins, forbidden places, or unusual foods that test the senses. 
-        My goal is to share these hidden stories and unique experiences with you. This is my archive of the dark, the bizarre, and the unforgettable.</p>
+    <div class="about-flex">
+      <div class="text">
+        <h2>About the Dark Tourist</h2>
+        <p>I'm a passionate explorer drawn to the world's hidden corners—abandoned ruins, forbidden sites, and bizarre culinary adventures. My mission is to share the untold stories of dark tourism, strange foods, and unique cultural experiences, inspiring you to see the world differently.</p>
       </div>
-      <img src="your-photo.jpg" alt="About Me">
+      <img src="https://images.unsplash.com/photo-1504598318550-17f7ca7a86e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="About Me">
+    </div>
+  </section>
+
+  <!-- Destinations -->
+  <section id="destinations" class="section destinations">
+    <h2>Featured Dark Tourism Destinations</h2>
+    <p>Explore haunting sites that tell powerful stories.</p>
+    <div class="carousel">
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1568792923760-d18f74713a5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Chernobyl">
+        <p>Chernobyl, Ukraine</p>
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Auschwitz">
+        <p>Auschwitz, Poland</p>
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1519984537472-27b3454160b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Pompeii">
+        <p>Pompeii, Italy</p>
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1470217956675-118b7d7c64ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Hiroshima">
+        <p>Hiroshima, Japan</p>
+      </div>
     </div>
   </section>
 
   <!-- Albums -->
   <section id="album" class="section">
-    <h2>My Travel Albums</h2>
-    <p>Click a category to explore photos and stories.</p>
+    <h2>Travel Albums</h2>
+    <p>Explore curated collections of my adventures.</p>
     <div class="album">
-      <img src="dark-tourism.jpg" alt="Dark Tourism" title="Dark Tourism">
-      <img src="strange-food.jpg" alt="Strange Food" title="Strange Food">
-      <img src="festivals.jpg" alt="Festivals" title="Festivals">
-      <img src="attractions.jpg" alt="Attractions" title="Attractions">
+      <div>
+        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Dark Tourism">
+        <p>Dark Tourism</p>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Strange Food">
+        <p>Strange Food</p>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1533487922797-7a0e909570b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Festivals">
+        <p>Festivals</p>
+      </div>
+      <div>
+        <img src="https://images.unsplash.com/photo-1470217956675-118b7d7c64ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Attractions">
+        <p>Attractions</p>
+      </div>
     </div>
   </section>
 
   <!-- Blog -->
   <section id="blog" class="section">
-    <h2>Latest Journeys</h2>
+    <h2>Latest Stories</h2>
     <div class="blog">
       <div class="blog-post">
-        <img src="chernobyl.jpg" alt="Chernobyl">
-        <div>
+        <img src="https://images.unsplash.com/photo-1568792923760-d18f74713a5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200&q=80" alt="Chernobyl">
+        <div class="content">
+          <div class="meta">
+            <span><i class="fas fa-clock"></i> 5 min read</span>
+            <span><i class="fas fa-tag"></i> Dark Tourism</span>
+          </div>
           <h3>The Ghost Town of Chernobyl</h3>
           <p>Walking through Pripyat is like stepping into a frozen nightmare. The silence, the abandoned schools, the Ferris wheel that never turned—it’s hauntingly beautiful.</p>
+          <a href="#">Read More</a>
         </div>
       </div>
       <div class="blog-post">
-        <img src="weird-food.jpg" alt="Weird Food">
-        <div>
+        <img src="https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200&q=80" alt="Weird Food">
+        <div class="content">
+          <div class="meta">
+            <span><i class="fas fa-clock"></i> 4 min read</span>
+            <span><i class="fas fa-tag"></i> Strange Food</span>
+          </div>
           <h3>Tasting the Unthinkable</h3>
           <p>From fried insects to fermented delicacies, I’ve tried some of the world’s strangest foods. Surprisingly, some turned out to be unforgettable flavors.</p>
+          <a href="#">Read More</a>
         </div>
       </div>
       <div class="blog-post">
-        <img src="festival.jpg" alt="Festival">
-        <div>
+        <img src="https://images.unsplash.com/photo-1519984537472-27b3454160b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200&q=80" alt="Festival">
+        <div class="content">
+          <div class="meta">
+            <span><i class="fas fa-clock"></i> 6 min read</span>
+            <span><i class="fas fa-tag"></i> Festivals</span>
+          </div>
           <h3>Festivals of the Unusual</h3>
           <p>I’ve witnessed festivals that blend beauty with the bizarre—parades of fire, haunting masks, and rituals that tell untold cultural stories.</p>
+          <a href="#">Read More</a>
         </div>
+      </div>
+      <div class="blog-post">
+        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=200&q=80" alt="Auschwitz">
+        <div class="content">
+          <div class="meta">
+            <span><i class="fas fa-clock"></i> 7 min read</span>
+            <span><i class="fas fa-tag"></i> Dark Tourism</span>
+          </div>
+          <h3>Reflections from Auschwitz</h3>
+          <p>A journey through history's darkest chapters, where silence speaks volumes and lessons echo through time.</p>
+          <a href="#">Read More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guides -->
+  <section id="guides" class="section">
+    <h2>Travel Guides & Resources</h2>
+    <p>Plan your dark adventures with expert tips and itineraries.</p>
+    <div class="guides">
+      <div class="guide-card">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=150&q=80" alt="Budget Guide">
+        <h3>Budget Dark Tourism</h3>
+        <p>How to explore haunting sites on a shoestring budget.</p>
+        <a href="#" class="cta">Read Guide</a>
+      </div>
+      <div class="guide-card">
+        <img src="https://images.unsplash.com/photo-1519744792095-2f2205e87b6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=150&q=80" alt="Safety Tips">
+        <h3>Safety in Shadow Lands</h3>
+        <p>Navigating sensitive sites with respect and care.</p>
+        <a href="#" class="cta">Read Guide</a>
+      </div>
+      <div class="guide-card">
+        <img src="https://images.unsplash.com/photo-1568792923760-d18f74713a5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=150&q=80" alt="Itinerary">
+        <h3>7-Day Chernobyl Tour</h3>
+        <p>A detailed itinerary for exploring the exclusion zone.</p>
+        <a href="#" class="cta">Read Guide</a>
       </div>
     </div>
   </section>
@@ -101,13 +570,29 @@
   <!-- Footer -->
   <footer id="contact">
     <div>
-      <h3>About Me</h3>
-      <p>Join me on unconventional journeys into the world’s hidden, strange, and mysterious places.</p>
+      <h3>Dark Tourist</h3>
+      <p>Join me on a journey through the world’s hidden, strange, and mysterious places.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
     </div>
     <div>
-      <h3>Join My Mailing List</h3>
-      <input type="email" placeholder="Enter your email"><br>
+      <h3>Newsletter</h3>
+      <p>Subscribe for exclusive stories and travel tips.</p>
+      <input type="email" placeholder="Enter your email">
       <button>Subscribe Now</button>
+    </div>
+    <div class="sitemap">
+      <h3>Explore</h3>
+      <a href="#about">About</a>
+      <a href="#destinations">Destinations</a>
+      <a href="#album">Albums</a>
+      <a href="#blog">Blog</a>
+      <a href="#guides">Guides</a>
+      <a href="#contact">Contact</a>
     </div>
   </footer>
 
