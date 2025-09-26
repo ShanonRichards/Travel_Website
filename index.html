@@ -137,6 +137,108 @@
       max-width: 1200px;
       margin: auto;
     }
+    /* Stories Section */
+    .stories {
+      padding: 40px 20px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      max-width: 1200px;
+    }
+    .stories h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .stories .stories-carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      scroll-behavior: smooth;
+      padding-bottom: 20px;
+      justify-content: center;
+    }
+    .stories .stories-carousel::-webkit-scrollbar {
+      height: 8px;
+    }
+    .stories .stories-carousel::-webkit-scrollbar-thumb {
+      background: #00a3cc;
+      border-radius: 10px;
+    }
+    .stories .story-item {
+      flex: 0 0 auto;
+      text-align: center;
+      cursor: pointer;
+    }
+    .stories .story-item img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #00a3cc;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    .stories .story-item img:hover {
+      transform: scale(1.1);
+      border-color: #008099;
+    }
+    .stories .story-item p {
+      margin-top: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #2d2d2d;
+    }
+    /* Modal for Stories */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 90%;
+      padding: 20px;
+      position: relative;
+      text-align: center;
+    }
+    .modal-content img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .modal-content h3 {
+      margin: 10px 0;
+      font-size: 20px;
+      color: #2d2d2d;
+    }
+    .modal-content p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .modal-content .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      color: #2d2d2d;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .modal-content .close:hover {
+      color: #00a3cc;
+    }
     .about-flex {
       display: flex;
       align-items: center;
@@ -387,16 +489,21 @@
       .destinations .carousel-item {
         flex: 0 0 100%;
       }
+      .stories .stories-carousel {
+        flex-direction: row;
+        justify-content: flex-start;
+      }
+      .stories .story-item img {
+        width: 60px;
+        height: 60px;
+      }
+      .stories .story-item p {
+        font-size: 10px;
+      }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <script>
-    window.addEventListener('scroll', () => {
-      const header = document.querySelector('header');
-      header.classList.toggle('scrolled', window.scrollY > 50);
-    });
-  </script>
 </head>
 <body>
 
@@ -412,6 +519,7 @@
     </div>
     <nav>
       <a href="#about">About</a>
+      <a href="#stories">Stories</a>
       <a href="#destinations">Destinations</a>
       <a href="#album">Albums</a>
       <a href="#blog">Blog</a>
@@ -424,8 +532,63 @@
   <section class="banner">
     <h1>Uncover the Unseen</h1>
     <p>Embark on a journey through the world's most haunting and extraordinary destinations.</p>
-    <a href="#destinations" class="cta">Discover Now</a>
+    <a href="#stories" class="cta">Discover Now</a>
   </section>
+
+  <!-- Stories Section -->
+  <section id="stories" class="section stories">
+    <h2>My Dark Tourism Stories</h2>
+    <div class="stories-carousel">
+      <div class="story-item" onclick="openModal('chernobyl')">
+        <img src="https://images.unsplash.com/photo-1568792923760-d18f74713a5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="Chernobyl">
+        <p>Chernobyl</p>
+      </div>
+      <div class="story-item" onclick="openModal('dmz')">
+        <img src="https://images.unsplash.com/photo-1612271676500-7db2ac22c305?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="DMZ">
+        <p>DMZ</p>
+      </div>
+      <div class="story-item" onclick="openModal('killingfields')">
+        <img src="https://images.unsplash.com/photo-1578323309739-3b4a5b807ebb?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="Killing Fields">
+        <p>Killing Fields</p>
+      </div>
+      <div class="story-item" onclick="openModal('busgraveyard')">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="Abandoned Bus Graveyard">
+        <p>Bus Graveyard</p>
+      </div>
+      <div class="story-item" onclick="openModal('catacombsparis')">
+        <img src="https://images.unsplash.com/photo-1519744792095-2f2205e87b6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="Catacombs Paris">
+        <p>Catacombs Paris</p>
+      </div>
+      <div class="story-item" onclick="openModal('catacombsnaples')">
+        <img src="https://images.unsplash.com/photo-1552831380-8c258d294381?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="Catacombs Naples">
+        <p>Catacombs Naples</p>
+      </div>
+      <div class="story-item" onclick="openModal('sedlec')">
+        <img src="https://images.unsplash.com/photo-1591966934050-6c7965b7b2e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="Sedlec Ossuary">
+        <p>Bone Church</p>
+      </div>
+      <div class="story-item" onclick="openModal('bunkers')">
+        <img src="https://images.unsplash.com/photo-1504598318550-17f7ca7a86e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="Bunkers Ukraine">
+        <p>Bunkers</p>
+      </div>
+      <div class="story-item" onclick="openModal('auschwitz')">
+        <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="Auschwitz">
+        <p>Auschwitz</p>
+      </div>
+      <div class="story-item" onclick="openModal('dachau')">
+        <img src="https://images.unsplash.com/photo-1612271676500-7db2ac22c305?ixlib=rb-4.0.3&auto=format&fit=crop&w=80&h=80&q=80" alt="Dachau">
+        <p>Dachau</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal for Stories -->
+  <div id="storyModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div id="modal-content"></div>
+    </div>
+  </div>
 
   <!-- About -->
   <section id="about" class="section">
@@ -612,6 +775,7 @@
     <div class="sitemap">
       <h3>Explore</h3>
       <a href="#about">About</a>
+      <a href="#stories">Stories</a>
       <a href="#destinations">Destinations</a>
       <a href="#album">Albums</a>
       <a href="#blog">Blog</a>
@@ -619,6 +783,119 @@
       <a href="#contact">Contact</a>
     </div>
   </footer>
+
+  <!-- JavaScript for Modal and Header Scroll -->
+  <script>
+    // Header Scroll Effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Stories Modal Functionality
+    const modal = document.getElementById('storyModal');
+    const modalContent = document.getElementById('modal-content');
+
+    function openModal(destination) {
+      let content = '';
+      switch(destination) {
+        case 'chernobyl':
+          content = `
+            <h3>Chernobyl, Ukraine</h3>
+            <img src="https://images.unsplash.com/photo-1568792923760-d18f74713a5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Chernobyl 1">
+            <img src="https://images.unsplash.com/photo-1504598318550-17f7ca7a86e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Chernobyl 2">
+            <p>Exploring the abandoned city of Pripyat and the Chernobyl Exclusion Zone.</p>
+          `;
+          break;
+        case 'dmz':
+          content = `
+            <h3>DMZ, North/South Korea</h3>
+            <img src="https://images.unsplash.com/photo-1612271676500-7db2ac22c305?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="DMZ 1">
+            <img src="https://images.unsplash.com/photo-1519984537472-27b3454160b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="DMZ 2">
+            <p>A journey to the tense border dividing North and South Korea.</p>
+          `;
+          break;
+        case 'killingfields':
+          content = `
+            <h3>Killing Fields, Cambodia</h3>
+            <img src="https://images.unsplash.com/photo-1578323309739-3b4a5b807ebb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Killing Fields 1">
+            <img src="https://images.unsplash.com/photo-1519744792095-2f2205e87b6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Killing Fields 2">
+            <p>Reflecting on Cambodia’s tragic history at the Choeung Ek Killing Fields.</p>
+          `;
+          break;
+        case 'busgraveyard':
+          content = `
+            <h3>Abandoned Bus Graveyard, Ukraine</h3>
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Bus Graveyard 1">
+            <img src="https://images.unsplash.com/photo-1470217956675-118b7d7c64ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Bus Graveyard 2">
+            <p>A haunting collection of abandoned buses in Ukraine’s wilderness.</p>
+          `;
+          break;
+        case 'catacombsparis':
+          content = `
+            <h3>Catacombs, Paris, France</h3>
+            <img src="https://images.unsplash.com/photo-1519744792095-2f2205e87b6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Catacombs Paris 1">
+            <img src="https://images.unsplash.com/photo-1591966934050-6c7965b7b2e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Catacombs Paris 2">
+            <p>Descending into the eerie underground ossuaries of Paris.</p>
+          `;
+          break;
+        case 'catacombsnaples':
+          content = `
+            <h3>Catacombs of Naples, Italy</h3>
+            <img src="https://images.unsplash.com/photo-1552831380-8c258d294381?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Catacombs Naples 1">
+            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Catacombs Naples 2">
+            <p>Exploring the ancient underground tunnels of Naples.</p>
+          `;
+          break;
+        case 'sedlec':
+          content = `
+            <h3>Sedlec Ossuary, Czech Republic</h3>
+            <img src="https://images.unsplash.com/photo-1591966934050-6c7965b7b2e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Sedlec Ossuary 1">
+            <img src="https://images.unsplash.com/photo-1504598318550-17f7ca7a86e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Sedlec Ossuary 2">
+            <p>The haunting beauty of the Bone Church in Kutná Hora.</p>
+          `;
+          break;
+        case 'bunkers':
+          content = `
+            <h3>Bunkers, Ukraine</h3>
+            <img src="https://images.unsplash.com/photo-1504598318550-17f7ca7a86e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Bunkers 1">
+            <img src="https://images.unsplash.com/photo-1612271676500-7db2ac22c305?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Bunkers 2">
+            <p>Discovering hidden Cold War-era bunkers in Ukraine.</p>
+          `;
+          break;
+        case 'auschwitz':
+          content = `
+            <h3>Auschwitz, Poland</h3>
+            <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Auschwitz 1">
+            <img src="https://images.unsplash.com/photo-1519984537472-27b3454160b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Auschwitz 2">
+            <p>A somber visit to the historic site of Auschwitz-Birkenau.</p>
+          `;
+          break;
+        case 'dachau':
+          content = `
+            <h3>Dachau, Germany</h3>
+            <img src="https://images.unsplash.com/photo-1612271676500-7db2ac22c305?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Dachau 1">
+            <img src="https://images.unsplash.com/photo-1568792923760-d18f74713a5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Dachau 2">
+            <p>Reflecting on history at the Dachau Concentration Camp Memorial.</p>
+          `;
+          break;
+      }
+      modalContent.innerHTML = content;
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+      modalContent.innerHTML = '';
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        closeModal();
+      }
+    };
+  </script>
 
 </body>
 </html>
